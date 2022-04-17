@@ -1,0 +1,11 @@
+{
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "extends": ["eslint:recommended", "google"],
+    "rules": {
+      "quotes": [2, "double"],
+      "valid-jsdoc": [0]
+    }
+}

@@ -1,15 +1,14 @@
 {
-  "name": "rollup-plugin-pug",
-  "version": "1.1.1",
+  "name": "@jrg/rollup-plugin-pug",
+  "version": "2.1.1",
   "description": "Transforms Pug (aka Jade) templates to ES6 modules.",
-  "main": "dist/rollup-plugin-pug.js",
+  "main": "dist/rollup-plugin-jrg-pug.mjs",
+  "src": "index.mjs",
   "scripts": {
-    "test": "istanbul cover ./node_modules/mocha/bin/_mocha -- test/run.js",
-    "pretest": "npm run build && rimraf ./test/~tmp/*",
-    "build": "rimraf ./dist/* && node ./build-rt.js && rollup -c",
-    "prepublish": "npm run lint && npm test",
-    "postinstall": "node ./build-rt.js",
-    "lint": "eslint src/**/*.ts test/run.js"
+    "test": "c8 mocha test/run.js",
+    "build": "node --experimental-json-modules ./node_modules/.bin/rollup --config ./build/rollup.config.mjs",
+    "lint": "eslint **/*.mjs",
+    "lint:fix": "eslint **/*.mjs --fix"
   },
   "keywords": [
     "rollup",
@@ -20,36 +19,20 @@
     "jade",
     "pug"
   ],
-  "engines": {
-    "node": ">=6.0"
-  },
-  "author": "aMarCruz <amarcruzbox-git@yahoo.com>",
-  "license": "MIT",
-  "homepage": "https://github.com/aMarCruz/rollup-plugin-pug",
-  "bugs": "https://github.com/aMarCruz/rollup-plugin-pug/issues",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aMarCruz/rollup-plugin-pug.git"
-  },
+  "author": "JRGleason",
+  "license": "GPL",
   "dependencies": {
-    "gen-pug-source-map": "^1.0.0",
-    "pug": "^2.0.3",
-    "pug-runtime": "^2.0.4",
-    "rollup-pluginutils": "^2.3.3"
+    "@rollup/pluginutils": "latest",
+    "pug": "latest",
+    "pug-runtime": "latest"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^1.5.0",
-    "eslint": "^5.7.0",
-    "istanbul": "^0.4.5",
-    "mocha": "^5.2.0",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.66.0",
-    "rollup-plugin-alias": "^1.4.0",
-    "rollup-plugin-typescript2": "^0.17.0",
-    "tslib": "^1.9.3",
-    "typescript": "~3.3.0"
-  },
-  "peerDependencies": {
-    "rollup": ">=0.61"
+    "@rollup/plugin-node-resolve": "^13.2.1",
+    "c8": "latest",
+    "eslint": "latest",
+    "eslint-config-google": "latest",
+    "mocha": "latest",
+    "rollup": "latest",
+    "rollup-plugin-alias": "latest"
   }
 }

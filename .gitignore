@@ -53,3 +53,4 @@ dist/*.map
 **/~tmp
 .rpt*
 yarn.lock
+dist
