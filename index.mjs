@@ -1,8 +1,12 @@
-import * as pug from 'pug'
+import pug from 'pug'
 import { resolve, dirname } from 'path'
-// import { makeFilter, arrIfDeps, clone } from './utils/index.mjs'
+import { makeFilter, arrIfDeps, clone } from './utils/index.mjs'
+import {fileURLToPath} from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 const compile = pug.compile;
-// const compileClientWithDependenciesTracked = pug.compileClientWithDependenciesTracked;
+const compileClientWithDependenciesTracked = pug.compileClientWithDependenciesTracked;
 
 // used pug options, note this list does not include 'cache' and 'name'
 const PUGPROPS = [
@@ -23,7 +27,7 @@ const PUGPROPS = [
 const clonePugOpts = (opts, filename)=>{
   return PUGPROPS.reduce((o, p) => {
     if (p in opts) {
-      // o[p] = clone(opts[p])
+      o[p] = clone(opts[p])
       o[p] = Object.assign(opts[p])
     }
     return o
@@ -117,7 +121,7 @@ const parseOptions = (options)=>{
 const pugPlugin = (options)=>{
 
   // prepare extensions to match with the extname() result
-  const filter = null; //makeFilter(options, ['.pug', '.jade'])
+  const filter = makeFilter(options, ['.pug', '.jade'])
 
   // Shallow copy of user options & defaults
   const config = parseOptions(options)
@@ -192,9 +196,8 @@ const pugPlugin = (options)=>{
         code = moveImports(code, imports)
 
         // get function body and dependencies
-        console.error("TODO Fixme")
-        // fn = compileClientWithDependenciesTracked(code, pugOpts)
-        // body = fn.body.replace('function template(', '\nexport default function(')
+        fn = compileClientWithDependenciesTracked(code, pugOpts)
+        body = fn.body.replace('function template(', '\nexport default function(')
 
         // put the pung-runtime import as the first of the queue, if neccesary
         if (config._runtimeImport && /\bpug\./.test(body)) {
@@ -205,7 +208,7 @@ const pugPlugin = (options)=>{
         body = imports.join('\n') + `${body};\n`
       }
 
-      const dependencies = null; //arrIfDeps(fn.dependencies)
+      const dependencies = arrIfDeps(fn.dependencies)
 
       if (map) {
         console.error("Map is out of date and needs reimplemented");

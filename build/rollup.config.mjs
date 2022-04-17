@@ -1,20 +1,23 @@
 import pkgjson from "../package.json" assert { type: 'json' };
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-
-console.log(pkgjson)
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 
 const banner =
 `/**
  * rollup-plugin-jrg-pug v${pkgjson.version}
  * @author jrg'
- * @license MIT'
+ * @license GPL'
  */`;
-console.log("This si s" +process.cwd());
+
 export default {
   input: pkgjson.src,
   output: {
     file: pkgjson.main,
     format: "esm"
   },
-  plugins: [nodeResolve()]
+  plugins: [nodeResolve({
+    browser: false,
+    preferBuiltins: true
+  }), commonjs(), json()]
 };

@@ -1,4 +1,10 @@
 {
+    "env": {
+        "browser": false,
+        "es6": true,
+        "node": true,
+        "mocha": true
+    },
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
@@ -6,6 +12,8 @@
     "extends": ["eslint:recommended", "google"],
     "rules": {
       "quotes": [2, "double"],
-      "valid-jsdoc": [0]
+      "valid-jsdoc": [0],
+      "require-jsdoc": [0],
+      "max-len":[1]
     }
 }

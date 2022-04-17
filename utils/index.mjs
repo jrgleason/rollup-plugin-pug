@@ -1,4 +1,4 @@
-import { createFilter } from '@rollup/pluginutils';
+import {createFilter} from "@rollup/pluginutils";
 import {extname} from "path";
 
 /**
